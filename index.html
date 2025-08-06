@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proyecto Interactivo</title>
+  <link rel="stylesheet" href="estilos/estilos.css" />
+</head>
+<body>
+  <header>
+    <h1>Mi Sitio Web</h1>
+    <button id="menu-toggle" aria-label="Mostrar menú">☰</button>
+    <nav id="menu">
+      <a href="#" tabindex="1">Inicio</a>
+      <a href="#" tabindex="2">Galería</a>
+      <a href="#" tabindex="3">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="slider">
+    <img src="img/img1.jpg" alt="Imagen 1 del slider" id="slider-img">
+    <div class="controles">
+      <button onclick="cambiarImagen(-1)">⬅</button>
+      <button onclick="cambiarImagen(1)">➡</button>
+    </div>
+  </section>
+
+  <section class="formulario">
+    <h2>Contáctanos</h2>
+    <form id="contacto-form">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" tabindex="4">
+      <span class="mensaje" id="nombreMsg"></span>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" tabindex="5">
+      <span class="mensaje" id="correoMsg"></span>
+
+      <button type="submit" tabindex="6">Enviar</button>
+    </form>
+  </section>
+
+  <script src="js/interacciones.js"></script>
+  <script src="js/validaciones.js"></script>
+</body>
+</html>
