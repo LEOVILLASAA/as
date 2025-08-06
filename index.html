@@ -4,16 +4,164 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Proyecto Interactivo</title>
-  <link rel="stylesheet" href="estilos/estilos.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #0d6efd;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    #menu-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      display: none;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      display: inline-block;
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .slider {
+      margin: 30px auto;
+      text-align: center;
+      position: relative;
+      max-width: 600px;
+    }
+
+    .slider img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .controles {
+      margin-top: 10px;
+    }
+
+    .controles button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .formulario {
+      background-color: #fff;
+      padding: 30px;
+      margin-top: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .formulario h2 {
+      margin-bottom: 20px;
+    }
+
+    .formulario label {
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
+
+    .formulario input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .formulario button {
+      margin-top: 20px;
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .formulario button:hover {
+      background-color: #084298;
+    }
+
+    .mensaje {
+      color: red;
+      font-size: 14px;
+      display: block;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+      #menu-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #0d6efd;
+        padding: 10px 0;
+      }
+
+      nav a {
+        margin: 10px 0;
+      }
+
+      nav.mostrar {
+        display: flex;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <header>
     <h1>Mi Sitio Web</h1>
     <button id="menu-toggle" aria-label="Mostrar menú">☰</button>
     <nav id="menu">
-      <a href="#" tabindex="1">Inicio</a>
-      <a href="#" tabindex="2">Galería</a>
-      <a href="#" tabindex="3">Contacto</a>
+      <a href="#">Inicio</a>
+      <a href="#">Galería</a>
+      <a href="#">Contacto</a>
     </nav>
   </header>
 
@@ -29,18 +177,67 @@
     <h2>Contáctanos</h2>
     <form id="contacto-form">
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" tabindex="4">
+      <input type="text" id="nombre">
       <span class="mensaje" id="nombreMsg"></span>
 
       <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" tabindex="5">
+      <input type="email" id="correo">
       <span class="mensaje" id="correoMsg"></span>
 
-      <button type="submit" tabindex="6">Enviar</button>
+      <button type="submit">Enviar</button>
     </form>
   </section>
 
-  <script src="js/interacciones.js"></script>
-  <script src="js/validaciones.js"></script>
+  <script>
+    // Menú responsive
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+      document.getElementById("menu").classList.toggle("mostrar");
+    });
+
+    // Slider de imágenes
+    const imagenes = [
+      "img/img1.jpg",
+      "img/img2.jpg",
+      "img/img3.jpg"
+    ];
+
+    let indiceActual = 0;
+
+    function cambiarImagen(direccion) {
+      indiceActual += direccion;
+      if (indiceActual < 0) indiceActual = imagenes.length - 1;
+      if (indiceActual >= imagenes.length) indiceActual = 0;
+      document.getElementById("slider-img").src = imagenes[indiceActual];
+    }
+
+    // Validación de formulario
+    document.getElementById("contacto-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let nombre = document.getElementById("nombre").value.trim();
+      let correo = document.getElementById("correo").value.trim();
+      let esValido = true;
+
+      if (nombre === "") {
+        document.getElementById("nombreMsg").textContent = "Por favor ingresa tu nombre.";
+        esValido = false;
+      } else {
+        document.getElementById("nombreMsg").textContent = "";
+      }
+
+      const regexCorreo = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (!regexCorreo.test(correo)) {
+        document.getElementById("correoMsg").textContent = "Ingresa un correo válido.";
+        esValido = false;
+      } else {
+        document.getElementById("correoMsg").textContent = "";
+      }
+
+      if (esValido) {
+        alert("Formulario enviado correctamente ✅");
+        this.reset();
+      }
+    });
+  </script>
 </body>
 </html>
+
